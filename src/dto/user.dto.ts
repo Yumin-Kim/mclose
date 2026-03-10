@@ -1,0 +1,29 @@
+export class UserDto {
+  id: number;
+  realName?: string;
+  loginId?: string;
+  loginPw?: string;
+  pwRound?: number;
+  hashPassword?: string;
+  phoneNo?: string;
+  email?: string;
+  birthDate?: string;
+  nonce?: number;
+  gender?: string;
+  jwt?: string;
+  role?: string;
+  isDeleted?: boolean;
+  deletedAt?: string;
+  bankCode?: string;
+  bankAccountNumber?: string;
+  bankName?: string;
+  signInRetrialCount?: number;
+  lastActivitedAt?: string;
+  workspaceHashtag?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  isConsentUse?: boolean;
+  isConsentMarketingInfo?: boolean;
+  isConsentPersonalInfo?: boolean;
+  newHashPassword?: string;
+}

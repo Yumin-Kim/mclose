@@ -1,0 +1,71 @@
+# ./run.sh로 실행하세요
+
+version: '3.7'
+services:
+  mysql-server:
+    image: mysql:8.0.37
+    container_name: mclose_mysql
+    platform: linux/amd64
+    environment:
+      - MYSQL_DATABASE=mclose_data
+      - MYSQL_ROOT_PASSWORD=1234
+      - TZ=Asia/Seoul
+      - MYSQL_CHARSET=utf8mb4
+      - MYSQL_COLLATION=utf8mb4_unicode_ci
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - '3306:3306'
+    volumes:
+      - ../../mysql:/var/lib/mysql
+      - ./init-scripts:/docker-entrypoint-initdb.d/
+    healthcheck:
+      test:
+        ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p1234']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - mclose-network
+
+  # APP API 서버 (동일 이미지, 다른 환경변수 사용)
+  mclose-app-api-server:
+    image: mclose-server:latest
+    container_name: mclose_app_api_server
+    ports:
+      - '${APP_PORT:-3000}:${APP_PORT:-3000}'
+    env_file:
+      - ../../.env
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - DB_HOST=mysql-server
+      - PORT=${APP_PORT:-3000}
+      - PROJECT_NAME=app
+    depends_on:
+      mysql-server:
+        condition: service_healthy
+    networks:
+      - mclose-network
+
+  # ADMIN API 서버 (동일 이미지, 다른 환경변수 사용)
+  mclose-admin-api-server:
+    image: mclose-server:latest
+    container_name: mclose_admin_api_server
+    ports:
+      - '${ADMIN_PORT:-3500}:${ADMIN_PORT:-3500}'
+    env_file:
+      - ../../.env
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - DB_HOST=mysql-server
+      - PORT=${ADMIN_PORT:-3500}
+      - PROJECT_NAME=admin
+    depends_on:
+      mysql-server:
+        condition: service_healthy
+    networks:
+      - mclose-network
+
+networks:
+  mclose-network:
+    driver: bridge

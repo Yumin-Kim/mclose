@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSocket Client</title>
+  </head>
+  <body>
+    <h1>WebSocket Client</h1>
+    <input id="message" type="text" placeholder="Enter message" />
+    <button onclick="sendMessage()">Send</button>
+    <ul id="messages"></ul>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script>
+      const url = new URL(window.location.href);
+      const socket = io(`ws://localhost:3000`, {
+        path: '/stream',
+        transports: ['websocket'],
+        query: {
+          token: 'TEST',
+          stockId: url.searchParams.get('stockId'),
+        },
+      });
+
+      socket.on('event-orderbook', (message) => {
+        console.log(message);
+        const li = document.createElement('li');
+        li.innerText = message;
+        document.getElementById('messages').appendChild(li);
+      });
+      socket.on('pong', (message) => {
+        console.log(message);
+      });
+
+      setInterval(() => {
+        socket.emit('ping', '');
+      }, 1000 * 2);
+
+      function sendMessage() {
+        const message = document.getElementById('message').value;
+      }
+    </script>
+  </body>
+</html>

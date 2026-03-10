@@ -1,0 +1,58 @@
+# ========================================================
+# ==================== SERVER CONFIG  ====================
+# ========================================================
+NODE_ENV=""
+
+# APP SERVER
+APP_BASE_URL=""
+APP_PORT="3000"
+
+# ADMIN SERVER
+ADMIN_BASE_URL=""
+ADMIN_PORT="4000"
+ADMIN_NAME="ADMIN-API"
+
+ADMIN_EMAIL="admin@admin.com"
+
+# ========================================================
+# ==================== COMMON CONFIG  ====================
+# ========================================================
+# DATABSE
+DB_HOST=""
+DB_PORT=""
+DB_USER=""
+DB_PASSWORD=""
+DB_NAME=""
+
+# AUTH/JWT  
+JWT_SECRET_KEY=""
+JWT_EXPIRATION_TIME="1h"
+PASSWORD_SAULT=""
+
+# SESSION  
+SESSION_SECRET=""
+
+# WINSTON OPTION  
+WINSTON_WRITE_INTO_FILE="true"
+WINSTON_WRITE_INTO_CONSOLE="true"
+WINSTON_MAX_SIZE="10MB" # 5MB
+WINSTON_MAX_FILES="5" # 5 files
+
+# ========================================================
+# ==================== AWS CONFIG  =======================
+# ========================================================
+GOOGLE_SMTP_USER=""
+GOOGLE_SMTP_PASSWORD=""
+GOOGLE_SMTP_SENDER_EMAIL=""
+GOOGLE_SMTP_HOST=""
+GOOGLE_SMTP_PORT=""
+GOOGLE_SMTP_BRAND_NAME=""
+
+# ========================================================
+# ==================== AWS CONFIG  =======================
+# ========================================================
+AWS_ACCESS_KEY=""
+AWS_SECRET_KEY=""
+AWS_REGION=""
+AWS_BUCKET_NAME=""
+AWS_FROM_EMAIL=""

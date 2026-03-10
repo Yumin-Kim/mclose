@@ -1,0 +1,23 @@
+# docker compose -f docker-compose-infra.yml  --project-name mclose-infra up -d
+version: "3.7"
+services:
+  mysql:
+    image: mysql:8.0.37
+    container_name: mysql
+    platform: linux/amd64
+    environment:
+      - MYSQL_DATABASE=mclose_data
+      - MYSQL_ROOT_PASSWORD=1234
+      - TZ=Asia/Seoul
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+  redis:
+    image: redis:6.2.5
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis:/data
